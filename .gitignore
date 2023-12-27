@@ -7,3 +7,7 @@ __py
 *.png
 
 .idea
+
+*.jpg
+
+*.csv
