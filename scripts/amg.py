@@ -211,6 +211,11 @@ def main(args: argparse.Namespace) -> None:
     os.makedirs(args.output, exist_ok=True)
 
     for t in targets:
+        base = os.path.basename(t)
+        base = os.path.splitext(base)[0]
+        save_base = os.path.join(args.output, base)
+        if os.path.exists(save_base):
+            continue
         print(f"Processing '{t}'...")
         image = cv2.imread(t)
         if image is None:
@@ -220,9 +225,9 @@ def main(args: argparse.Namespace) -> None:
 
         masks = generator.generate(image)
 
-        base = os.path.basename(t)
-        base = os.path.splitext(base)[0]
-        save_base = os.path.join(args.output, base)
+        # base = os.path.basename(t)
+        # base = os.path.splitext(base)[0]
+        # save_base = os.path.join(args.output, base)
         if output_mode == "binary_mask":
             os.makedirs(save_base, exist_ok=False)
             write_masks_to_folder(masks, save_base)
